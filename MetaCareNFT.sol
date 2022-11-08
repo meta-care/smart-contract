@@ -16,6 +16,14 @@ error CreateYourNftBeforeCallingThisFunction();
 contract MetaCareNFT is ERC721Enumerable, Ownable {
     using Strings for uint256;
 
+    //URIs storing the images for each NFT - taken from https://github.com/pinnpin/Dynamic-NFT-Sunflower-Demo/blob/main/contracts/sunflowerdnft.sol
+    //We will be using pinata.cloud to upload the images to IPFS
+    string[] IpfsUri = [
+        "https://ipfs.io/ipfs/QmR8bMU5tHTw8Eb95RPbizRRdEwwEuwcbKubnRwoA5YqKz/sunflower-stage1.json",
+        "https://ipfs.io/ipfs/QmR8bMU5tHTw8Eb95RPbizRRdEwwEuwcbKubnRwoA5YqKz/sunflower-stage2.json",
+        "https://ipfs.io/ipfs/QmR8bMU5tHTw8Eb95RPbizRRdEwwEuwcbKubnRwoA5YqKz/sunflower-stage3.json"
+    ];
+
     //URIs storing the metadata for each different NFT states
     string baseURI;
     string lowURI;
