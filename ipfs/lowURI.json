@@ -1,0 +1,11 @@
+{
+    "name": "Low Heart Rate",
+    "description": "The patient's resting heart rate is too low (below 60 bpm). This is not an official medical diagnosis and your heart rate should be monitored by a certified instrument. Please consult your doctor if you feel any chest pain.",
+    "image": "https://gateway.pinata.cloud/ipfs/QmNPRHWFYLw5HqQoGaZUkdyoZBjzoEaSatBREQZCFffQfQ/lowURI.png",
+    "attributes": [
+        { 
+            "trait-type": "Heart Rate",
+            "value": "Below 60"
+        }
+    ]
+  }

@@ -1,0 +1,11 @@
+{
+    "name": "Normal Heart Rate",
+    "description": "The patient's resting heart rate is normal (between 60 and 100 bpm). This is not an official medical diagnosis and your heart rate should be monitored by a certified instrument. Please consult your doctor if you feel any chest pain.",
+    "image": "https://gateway.pinata.cloud/ipfs/QmNPRHWFYLw5HqQoGaZUkdyoZBjzoEaSatBREQZCFffQfQ/baseURI.png",
+    "attributes": [
+        { 
+            "trait-type": "Heart Rate",
+            "value": "Normal"
+        }
+    ]
+  }
