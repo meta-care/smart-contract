@@ -50,7 +50,6 @@ You can see your new heart rate or new doctor address by calling the _getUserDat
 
 # Things we need to do on this smart contract :
 
-- Create at least 3 images & metadata + store the link inside
 - Adapt it so it can receive data from chainlink
 - Only allow chainlink to call the changeHeartRate function.
 - Test if the changing image and Chainlink work on a testnet
