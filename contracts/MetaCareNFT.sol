@@ -17,9 +17,10 @@ contract MetaCareNFT is ERC721Enumerable, Ownable {
     using Strings for uint256;
 
     //URIs storing the metadata for each different NFT states
-    string baseURI;
-    string lowURI;
-    string highURI;
+    string baseURI = "https://gateway.pinata.cloud/ipfs/QmNPRHWFYLw5HqQoGaZUkdyoZBjzoEaSatBREQZCFffQfQ/baseURI.png";
+    string lowURI = "https://gateway.pinata.cloud/ipfs/QmNPRHWFYLw5HqQoGaZUkdyoZBjzoEaSatBREQZCFffQfQ/lowURI.png";
+    string highURI = "https://gateway.pinata.cloud/ipfs/QmNPRHWFYLw5HqQoGaZUkdyoZBjzoEaSatBREQZCFffQfQ/highURI.png";
+
 
     //User Data structure (created during minting, values will be updated automatically)
     struct userData {
