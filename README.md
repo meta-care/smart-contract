@@ -55,3 +55,55 @@ You can see your new heart rate or new doctor address by calling the _getUserDat
 - Test if the changing image and Chainlink work on a testnet
 - We can store any other data, such as: surname, name, age, weight, height...
 - Make an Array of Doctors, do not store only one
+
+.
+
+---
+---
+---
+---
+
+.
+
+Request testnet LINK and ETH here: https://faucets.chain.link/
+
+Adapter external adapter au smart contract
+
+https://youtu.be/TjG14J38M2A?t=2640
+
+https://docs.chain.link/getting-started/advanced-tutorial
+
+
+refaire l’ABI
+
+faire le readme
+
+getUserData ?
+
+rendre payant en link, pour ne pas avoir a en ajouter a chaque fois
+
+fulfill uniquement callable by chainlink
+
+mettre un if (msg.sender == [chainlink address])
+
+---
+
+I've updated the smart contract to use chainlink with it.
+
+I don't have an external adaptor or a node running on my computer so I coudn't test it. But this is how it should work :
+
+-Create the smart contract on goerli (enter the jobId)
+
+-create your NFT using the mint function (enter your doctor's address)
+
+-Send Link token to the smart contract 
+https://faucets.chain.link/
+
+-call the getUserData function (enter your own ETH address) it will send a request to the chainlink oracle to get the data. Then, the oracle will call the fulfill function on our smart contract, and it will update the user average heart rate
+
+
+My questions :
+-Which parameters do I need to send to the chainlink oracle when I call it in the getUserData function ?
+
+-What data does it return to the smart contract ?
+    I would need the userAddress, the heartRate and the requestId
