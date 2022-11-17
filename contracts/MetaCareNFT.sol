@@ -192,4 +192,8 @@ contract MetaCareNFT is ERC721Enumerable, Ownable, ChainlinkClient {
     function withdrawBalance() public onlyOwner {
         payable(msg.sender).transfer(address(this).balance);
     }
+
+    function setJobId(bytes32 _jobId) public onlyOwner {
+        jobId = _jobId;
+    }
 }
