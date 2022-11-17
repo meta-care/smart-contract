@@ -19,11 +19,11 @@ contract MetaCareNFT is ERC721Enumerable, Ownable, ChainlinkClient {
 
     //URIs storing the metadata for each different NFT states
     string baseURI =
-        "https://gateway.pinata.cloud/ipfs/QmNPRHWFYLw5HqQoGaZUkdyoZBjzoEaSatBREQZCFffQfQ/baseURI.png";
+        "https://ipfs.io/ipfs/QmeLnoF5nMcMQ7dU4epuyF1cmMK1biF9yuTJ618qwtVxWF/baseURI.json";
     string lowURI =
-        "https://gateway.pinata.cloud/ipfs/QmNPRHWFYLw5HqQoGaZUkdyoZBjzoEaSatBREQZCFffQfQ/lowURI.png";
+        "https://ipfs.io/ipfs/QmeLnoF5nMcMQ7dU4epuyF1cmMK1biF9yuTJ618qwtVxWF/lowURI.json";
     string highURI =
-        "https://gateway.pinata.cloud/ipfs/QmNPRHWFYLw5HqQoGaZUkdyoZBjzoEaSatBREQZCFffQfQ/highURI.png";
+        "https://ipfs.io/ipfs/QmeLnoF5nMcMQ7dU4epuyF1cmMK1biF9yuTJ618qwtVxWF/highURI.json";
 
     bytes32 private jobId;
     uint256 private linkFee; // 0,1 * 10**18 (Varies by network and job);
