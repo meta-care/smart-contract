@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.12;
 
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@chainlink/contracts/src/v0.8/ChainlinkClient.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 
 error YouAlreadyHaveAnNFT();
 error ThisAccountDoesNotExist();
@@ -39,7 +39,7 @@ contract MetaCareNFT is ERC721Enumerable, Ownable, ChainlinkClient {
     //create one structure of data for each user (we can find it using the NFT tokenID)
     mapping(address => userData) userDataList;
 
-    //Prepare the smart contract
+    //Prepare the smart contract when its creation
     constructor(bytes32 _jobId) ERC721("MetaCare", "MC") {
         jobId = _jobId;
 
@@ -48,6 +48,8 @@ contract MetaCareNFT is ERC721Enumerable, Ownable, ChainlinkClient {
         setChainlinkOracle(0xCC79157eb46F5624204f47AB42b3906cAA40eaB7);
         linkFee = (1 * LINK_DIVISIBILITY) / 10; // = 0.1 LINK
     }
+
+    /////////////////////////////////// USER FUNCTIONS ///////////////////////////////////
 
     //add yourself to the user list by minting an NFT
     function mint(address _doctorAddress) public {
@@ -83,6 +85,7 @@ contract MetaCareNFT is ERC721Enumerable, Ownable, ChainlinkClient {
     //Enter your ETH address or the address of your patient
     function getUserData(address _userAddress)
         external
+        view
         returns (userData memory)
     {
         if (userDataList[_userAddress].userAddress != _userAddress) {
@@ -94,22 +97,52 @@ contract MetaCareNFT is ERC721Enumerable, Ownable, ChainlinkClient {
         }
 
         //check if its the user or a doctor who want to see the data
-        //Then get data from chainlink, and give the user the current data
         if (
             msg.sender == _userAddress ||
             msg.sender == userDataList[_userAddress].doctorAddress
         ) {
-            Chainlink.Request memory req = buildChainlinkRequest(
-                jobId,
-                address(this),
-                this.fulfill.selector
-            );
-            sendChainlinkRequest(req, linkFee);
             return userDataList[_userAddress];
         }
 
         //if the person calling the function isn't the data owner or a doctor, send him an error
         revert YouAreNotAllowedToSeeThisData();
+    }
+
+    /////////////////////////////////// UTILITY FUNCTIONS ///////////////////////////////////
+
+    //Get data from chainlink
+    function requestHeartRate(string memory _userAddress) external {
+        Chainlink.Request memory req = buildChainlinkRequest(
+            jobId,
+            address(this),
+            this.fulfill.selector
+        );
+        req.add("userAddress", _userAddress);
+        sendChainlinkRequest(req, linkFee);
+    }
+
+    //function called once chainlink send the data back to the smart contract
+    function fulfill(
+        bytes32 _requestId,
+        address _userAddress,
+        uint256 _heartRate
+    ) public recordChainlinkFulfillment(_requestId) {
+        userDataList[_userAddress].heartRate = _heartRate;
+    }
+
+    //cancel a chainlink request
+    function cancelRequest(
+        bytes32 _requestId,
+        uint256 _payment,
+        bytes4 _callbackFunctionId,
+        uint256 _expiration
+    ) public onlyOwner {
+        cancelChainlinkRequest(
+            _requestId,
+            _payment,
+            _callbackFunctionId,
+            _expiration
+        );
     }
 
     //Get the Metadata for each NFTs
@@ -156,12 +189,7 @@ contract MetaCareNFT is ERC721Enumerable, Ownable, ChainlinkClient {
         );
     }
 
-    //function called once chainlink send the data back to the smart contract
-    function fulfill(
-        bytes32 _requestId,
-        address _userAddress,
-        uint256 _heartRate
-    ) public recordChainlinkFulfillment(_requestId) {
-        userDataList[_userAddress].heartRate = _heartRate;
+    function withdrawBalance() public onlyOwner {
+        payable(msg.sender).transfer(address(this).balance);
     }
 }
