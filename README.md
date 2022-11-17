@@ -5,29 +5,30 @@ Each user can mint one NFT, and the data linked to this user is stored on the sm
 
 There is 3 different metadata possibilities. It is changed by the _tokenURI_ function. If the current heart rate is below 60bpm, a special image appears, is the current heart rate is above 100bpm, another image appears. And if the current heart rate is between these 2 values, a third image appears.
 
-Each user have a doctor, who can see the user data with the _getUserData_ function. The users can see their own data too.
+Each user have a doctor, who can see the user data with the _getUserData_ function. The users can see their own data too. This function is also used to get the data from chainlink.
 
 The user can change his doctor's ethereum address with the _changeDoctorAddress_ function.
 
 The users can sell or give their NFTs (because I don't see how can we stop them from doing it) But the functions will not work anymore. The NFT has to be owned by it's creator to make the smart contract work.
-
-The heart Rate of a user can be changed manually using the _changeHeartRate_ function.
 
 An error is thrown if we call a function on an non-existing account.
 
 .
 
 # How to use it:
-Deploy it on [Remix](https://remix.ethereum.org/) using a Remix Virtual machine.
 
-    You don't need to use a testnet.
-    You don't need to pay or to enter values to create it.
+Deploy it on Goerli with [Remix](https://remix.ethereum.org/)
+
+    You don't need to pay to create it.
+    Enter the jobId
 
 Mint your NFT using the _mint_ function.
 
     You only need to enter a doctor address. 
     It can be any ETH address you want.
     You don't need to pay to mint it.
+
+Send some [Link token](https://faucets.chain.link/) to the smart contract.
 
 You can see your data using the _getUserData_ function.
 
@@ -37,73 +38,3 @@ You can see your data using the _getUserData_ function.
 You can change your doctor address by using the _changeDoctorAddress_ function.
 
     You simply have to enter a new doctor ETH address.
-
-You can manually change your heart rate with the _changeHeartRate_ function.
-
-    Since Chainlink is still not implemented, anyone can change the heart rate of anyone else.
-
-You can see your new heart rate or new doctor address by calling the _getUserData_ function.
-
-    You need to enter your wallet address.
-
-.
-
-# Things we need to do on this smart contract :
-
-- Adapt it so it can receive data from chainlink
-- Only allow chainlink to call the changeHeartRate function.
-- Test if the changing image and Chainlink work on a testnet
-- We can store any other data, such as: surname, name, age, weight, height...
-- Make an Array of Doctors, do not store only one
-
-.
-
----
----
----
----
-
-.
-
-Request testnet LINK and ETH here: https://faucets.chain.link/
-
-Adapter external adapter au smart contract
-
-https://youtu.be/TjG14J38M2A?t=2640
-
-https://docs.chain.link/getting-started/advanced-tutorial
-
-
-refaire l’ABI
-
-faire le readme
-
-getUserData ?
-
-rendre payant en link, pour ne pas avoir a en ajouter a chaque fois
-
-fulfill uniquement callable by chainlink
-
-mettre un if (msg.sender == [chainlink address])
-
----
-
-I've updated the smart contract to use chainlink with it.
-
-I don't have an external adaptor or a node running on my computer so I coudn't test it. But this is how it should work :
-
--Create the smart contract on goerli (enter the jobId)
-
--create your NFT using the mint function (enter your doctor's address)
-
--Send Link token to the smart contract 
-https://faucets.chain.link/
-
--call the getUserData function (enter your own ETH address) it will send a request to the chainlink oracle to get the data. Then, the oracle will call the fulfill function on our smart contract, and it will update the user average heart rate
-
-
-My questions :
--Which parameters do I need to send to the chainlink oracle when I call it in the getUserData function ?
-
--What data does it return to the smart contract ?
-    I would need the userAddress, the heartRate and the requestId
